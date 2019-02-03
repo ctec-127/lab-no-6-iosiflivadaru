@@ -22,14 +22,35 @@ function convertTemp($temp, $unit1, $unit2)
     // Kelvin to Celsius = T(K) - 273.15
 
     // You need to develop the logic to convert the temperature based on the selections and input made
-
-
     
     if ($unit1 == $unit2) {
         return $temp;
-    } else {
-        echo "<h2>haha";
     }
+
+    if ($unit1 == 'celsius' && $unit2 == 'farenheit') {
+        $temp = $temp * 9/5 + 32;
+        return $temp;
+    } else if ($unit1 == 'celsius' && $unit2 == 'kelvin') {
+        $temp = $temp + 273.15;
+        return $temp;
+    }
+
+    if ($unit1 == 'farenheit' && $unit2 == 'celsius') {
+        $temp = ($temp - 32) * 5/9;
+        return round($temp, 4);
+    } else if ($unit1 == 'farenheit' && $unit2 == 'kelvin') {
+        $temp = ($temp + 459.67) * 5/9;
+        return round($temp, 3);
+    }
+
+    if ($unit1 == 'kelvin' && $unit2 == 'celsius') {
+        $temp = $temp - 273.15;
+        return $temp;
+    } else if ($unit1 == 'kelvin' && $unit2 == 'farenheit') {
+        $temp = $temp * 9/5 - 459.67;
+        return $temp;
+    }
+
     
 } // end function
 
@@ -44,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $originalTemperature = $_POST['originaltemp'];
     $originalUnit = $_POST['originalunit'];
     $conversionUnit = $_POST['conversionunit'];
+
     if ($originalUnit != '--Select--' && $conversionUnit !='--Select--') {
         $convertedTemp = convertTemp($originalTemperature, $originalUnit, $conversionUnit);
     }
